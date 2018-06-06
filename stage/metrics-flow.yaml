@@ -1,0 +1,14 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_bam:
+  -  class: File
+     path: deduped.bam
+
+mq_output: mq_metrics.txt
+qd_output: qd_metrics.txt
+gc_output: gc_metrics.txt
+isize_output: isize_metrics.txt
+align_stat_output: aln_stat_metrics.txt
+plot_output: metrics.pdf
+threads: 8
+

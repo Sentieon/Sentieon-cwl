@@ -1,0 +1,13 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_bam:
+  -  class: File
+     path: realigned.bam
+qcal:
+  -  class: File
+     path: recal_table.txt
+dbsnp:  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+shard: ["chr1", "chr2", "chr3"]
+output_file: output_hc.vcf.gz
+threads: 8
+

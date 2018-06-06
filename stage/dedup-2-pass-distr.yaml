@@ -1,0 +1,9 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+input_bam:
+  -  class: File
+     path: sorted.bam
+shard: ["chr1", "chr2", "chr3"]
+metrics_output_file: "dedup-metrics.txt"
+output_file: "deduped-distr.bam"
+threads: 8
+

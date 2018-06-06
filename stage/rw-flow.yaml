@@ -1,0 +1,11 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+rw1_input_bam:
+  -  class: File
+     path: sorted.bam
+rw1_output: copy.bam  
+rw2_output: copy2.bam
+advanced_options: {"rw1": ["--bam_compression", "1"], "rw2": ["--bam_compression", "2"]}
+#advanced_options: {"rw1": ["--bam_compression", "1"]}
+#advanced_options: {}
+threads: 8
+

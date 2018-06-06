@@ -1,0 +1,8 @@
+reference:  /home/regression/references/b37/hs37d5.fa
+input_bam:
+  -  /home/jzhao/47TB_storage/HGSC/HGSC_case7_DNA_normal/recaled.bam
+pon: /home/jzhao/ss1/201711.03.rc3/cnv/Trac549_broad_exome_HGSC_cov_pon_cnv_22/tmp/job-6917/stage-sentieon-cnv/pon-output_pon.hd5
+output_file: output_cnv
+target: /home/regression/references/b37/broad.exome.22.for_cnv.bed
+threads: 8
+target_padding: 250

@@ -1,0 +1,20 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_bam:
+  -  class: File
+     path: sorted.bam
+realign_known_sites:
+  -  /home/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+  -  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+bqsr_known_sites:
+  -  /home/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+  -  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+dbsnp:  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+qcal_output_file: recal_table-pipeline.txt
+dedup_output_bam: deduped-pipeline.bam
+dedup_metrics_output_file: dedup-metrics.txt
+realign_output_bam: realigned-pipeline.bam
+output_file: output_hc.vcf.gz
+interval:  /home/regression/references/hg19/TruSeq_exome_targeted_regions.hg19.bed
+shard: ["chr1", "chr2", "chr3"]
+threads: 16

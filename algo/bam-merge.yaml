@@ -1,0 +1,11 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+mergemode: 0
+input_bam:
+  -  class: File
+     path:  sorted.bam
+  -  class: File
+     path: deduped.bam
+
+output_file: out.bam
+threads: 8
+

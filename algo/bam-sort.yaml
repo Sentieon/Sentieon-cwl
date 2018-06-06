@@ -1,0 +1,6 @@
+input:
+  -  class: File
+     path: a.sam
+sam2bam: true
+output_file: a.bam
+threads: 8

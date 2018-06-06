@@ -1,0 +1,26 @@
+reference: /data/reference/hs37d5.fa
+input_reads:
+  - shuffle-1.fastq.gz
+  - shuffle-2.fastq.gz
+
+bwa_output_bam: sorted-pipeline.bam
+bqsr_known_sites:
+  - /data/reference/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+  - /data/reference/dbsnp_138.b37.vcf.gz
+dbsnp: /data/reference/dbsnp_138.b37.vcf.gz
+qcal_output_file: recal_table-pipeline.txt
+dedup_output_bam: deduped-pipeline.bam
+dedup_metrics_output_file: dedup-metrics.txt
+hc_interval: /data/reference/hs37d5_nodecoy.bed
+output_file: output_hc_pipeline_chr22.vcf.gz
+chunk_size: 160000000
+readgroup: "group2"
+platform: "ILLUMINA"
+sample: "sample"
+library: "library"
+mark_secondary: true
+threads: 64
+
+bam_compression: 1
+dedup_traverse_param: "100000/10000"
+hc_traverse_param: "100000/10000"

@@ -1,0 +1,11 @@
+reference:  /home/regression/references/b37/human_g1k_v37.fasta
+
+input_bam:
+  -  /home/regression/input_bams/RNA/s_2i1d199_gtf/deduped.bam
+
+output_file: splitted.cram
+
+interval: "1"
+
+threads: 8
+

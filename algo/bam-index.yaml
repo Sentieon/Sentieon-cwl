@@ -1,0 +1,7 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input: 
+  class: File
+  path: deduped.bam
+
+output: deduped.bam.bai 

@@ -1,0 +1,8 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+reads:
+  -  /net/c1n6/data/work/xliu/jeremy/chr22/shuffle-1.fastq.gz
+  -  /net/c1n6/data/work/xliu/jeremy/chr22/shuffle-2.fastq.gz
+mark_secondary: true
+chunk_size: 100000000
+output_filename: a.sam
+threads: 8

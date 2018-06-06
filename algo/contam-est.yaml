@@ -1,0 +1,9 @@
+reference:  /home/regression/references/b37/hs37d5.fa
+
+input_bam:
+  -  /home/regression/input_bams/HGSC_case7/corealigned_tumor.bam
+genotype_vcf: /home/regression/input_bams/HGSC_case7_DNA_normal/output_ug_snp.vcf
+pop_vcf: /home/regression/references/b37/hg19_population_stratified_af_hapmap_3.3.fix.vcf
+output_file: contam-est.txt
+threads: 8
+

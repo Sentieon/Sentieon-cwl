@@ -1,0 +1,11 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_vcf: 
+   class: File
+   path: output_tnscope.vcf.gz
+
+dbsnp:  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+
+output_file: output_vc_metrics.txt
+threads: 8
+

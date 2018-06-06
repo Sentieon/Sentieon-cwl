@@ -1,0 +1,18 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_vcf:  
+   class: File
+   path: output.vcf.gz
+
+recal: output_hc.vcf_snp.recal.gz
+var_type: SNP
+sensitivity: 99
+output_file: output_hc.vcf_snp_recaled.vc.gz
+tranches_file: 
+  class: File
+  path:  output_hc.vcf_snp.tranches
+
+
+
+threads: 8
+

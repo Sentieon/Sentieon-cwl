@@ -1,0 +1,11 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_bam:
+  -  class: File
+     path: realigned.bam
+known_sites:
+  -  /home/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+  -  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+output_file: recal_table.txt
+threads: 8
+

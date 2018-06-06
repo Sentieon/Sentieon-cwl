@@ -1,0 +1,8 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+input_bam:
+  -  class: File
+     path: sorted.bam
+shard: ["chr1", "chr2", "chr3"]
+output_file: "copy-distr.bam"
+threads: 8
+

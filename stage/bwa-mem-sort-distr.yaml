@@ -1,0 +1,14 @@
+reference:  /home/regression/references/b37/human_g1k_v37_decoy.fasta
+input_reads:
+  -  /net/c1n6/data/work/xliu/jeremy/chr22/shuffle-1.fastq.gz
+  -  /net/c1n6/data/work/xliu/jeremy/chr22/shuffle-2.fastq.gz
+input_reads_index_file: /net/c1n6/data/work/xliu/jeremy/chr22/shuffle.fastq.gz.idx
+
+chunk_size: 160000000
+extract_chunks: ["0", "1"]
+output_file: sorted-distr.bam
+readgroup: "group1"
+platform: "ILLUMINA"
+sample: "sample"
+library: "library"
+threads: 8

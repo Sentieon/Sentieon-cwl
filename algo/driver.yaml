@@ -1,0 +1,12 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+algo: ReadWriter
+
+input_bam:
+  -  class: File
+     path: sorted.bam
+
+output_file: out.bam
+
+threads: 8
+

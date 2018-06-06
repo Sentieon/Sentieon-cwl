@@ -1,0 +1,17 @@
+reference:  /home/regression/references/b37/Homo_sapiens_assembly19.fasta
+
+input_bam:
+  -  /home/regression/input_bams/s_1p3d177/recaled.bam
+
+pon: /net/c1n6/data/work/zhipan/cwl_regression/java.PoN.dcov.vcf.gz
+
+cosmic: /home/regression/references/b37/b37_cosmic_v54_120711.vcf.gz
+dbsnp: /home/regression/references/b37/dbsnp_138.b37.vcf.gz
+
+tumor_sample: s_1p3d177
+
+threads: 8
+
+output_file: output_tnsnv.vcf.gz
+
+interval: "1"

@@ -1,0 +1,19 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+realign_known_sites:
+  -  /home/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+  -  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+bqsr_known_sites:
+  -  /home/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+  -  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+dbsnp:  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+input_reads: [
+    [/net/c1n6/data/work/xliu/centrillion-100/s_1p10d168_1.1M.fastq.gz,
+     /net/c1n6/data/work/xliu/centrillion-100/s_1p10d168_2.1M.fastq.gz],
+    [/net/c1n6/data/work/xliu/centrillion-100/s_3p7d168_1.1M.fastq.gz,
+     /net/c1n6/data/work/xliu/centrillion-100/s_3p7d168_2.1M.fastq.gz]
+]
+readgroup: ["1p10d168", "3p7d168"]
+sample: ["1p10d168", "3p7d168"]
+library: ["lib1", "lib2"]
+threads: 16
+platform: ILLUMINA

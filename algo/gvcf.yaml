@@ -1,0 +1,9 @@
+reference:  /home/regression/references/hg19/ucsc.hg19.fasta
+
+input_vcf: 
+  -  class: File
+     path: output_hc.g.vcf.gz
+dbsnp:  /home/bundle/hg19/dbsnp_138.hg19.vcf.gz
+output_file: output_gvcf.vcf.g.gz
+threads: 8
+
