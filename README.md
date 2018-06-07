@@ -1,12 +1,12 @@
 # Introduction
 
-This document describes the integration of Sentieon software with CWL and Toil. This integration enables to easily run CWL-defined Sentieon pipelines on a variety of HPC and cloud environments, either on a single node or distributed onto multiple nodes for rapid turnaround processing. Please see Sentieon Application Note on distribution mode for more information on that topic (<https://s3.amazonaws.com/sentieon-release/documentation/app_notes/App+note+-+Distributed+mode.pdf>).
+This document describes the integration of Sentieon software with CWL and Toil. This integration enables to easily run CWL-defined Sentieon pipelines on a variety of HPC and cloud environments, either on a single node or distributed onto multiple nodes for rapid turnaround processing. Please see Sentieon [Distribution Application Note](https://s3.amazonaws.com/sentieon-release/documentation/app_notes/App+note+-+Distributed+mode.pdf) on distribution mode for more information on that topic.
 
 # Introduction to CWL and Toil
 
-CWL, also known as Common Workflow Language, is a specification for describing analysis workflows and tools. The objective of CWL standards is to make analysis workflows portable and scalable on a variety of hardware and software environments. CWL enables application developers to focus on the pipeline development without having to worry about deployment details or distribution implementation. For more information about CWL, please refer to its website at: <https://www.commonwl.org/>.
+CWL, also known as Common Workflow Language, is a specification for describing analysis workflows and tools. The objective of CWL standards is to make analysis workflows portable and scalable on a variety of hardware and software environments. CWL enables application developers to focus on the pipeline development without having to worry about deployment details or distribution implementation. For more information about CWL, please refer to its [website](https://www.commonwl.org/).
 
-Toil is a cross-platform pipeline management system and execution engine that implements the CWL standards. Toil enables executing pipelines defined in CWL on different job management systems. It is written in Python. Toil supports a number of scheduler systems, including Grid Engine, Slurm, Torque and LSF as well as workflow execution on public clouds including Amazon Web Services, Google Cloud, and Microsoft's Azure. For more details about Toil, please refer to its website at: <http://toil.ucsc-cgl.org/>.
+Toil is a cross-platform pipeline management system and execution engine that implements the CWL standards. Toil enables executing pipelines defined in CWL on different job management systems. It is written in Python. Toil supports a number of scheduler systems, including Grid Engine, Slurm, Torque and LSF as well as workflow execution on public clouds including Amazon Web Services, Google Cloud, and Microsoft's Azure. For more details about Toil, please refer to its [website](http://toil.ucsc-cgl.org/).
 
 Sentieon has developed a set of reference pipelines following CWL specification. Users can modify these pipelines to fit their needs for deployment in different environments.
 
@@ -20,7 +20,7 @@ To run the CWL pipelines provided by Sentieon, the following software is require
 
 2.  Node.js
 
-3.  Toil-supported scheduler, for instance: Grid Engine, Slurm, Torque and LSF. In this App note, we will use LSF as an example (IBM Spectrum LSF Suite Community Edition 10.1. See <https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_offering/lsfce10.1_quick_start.html> for more details)
+3.  Toil-supported scheduler, for instance: Grid Engine, Slurm, Torque and LSF. In this App note, we will use LSF as an example (IBM Spectrum LSF Suite Community Edition 10.1. See IBM's [LSF website](https://www.ibm.com/support/knowledgecenter/en/SSWRJV_10.1.0/lsf_offering/lsfce10.1_quick_start.html) for more details)
 
 4.  Cwltoil with versions and installation process below
 
@@ -262,7 +262,7 @@ where:
 -   `-o fastq_index`: Defines the output index file name.
 -   `sample1_1.fq.gz` and `sample1_2.fq.gz`: input pair-ended fastq files.
 
-Please refer to Sentieon "App note - Distributed mode" for more details of the `fqidx`.
+Please refer to Sentieon's [App note - Distributed mode](https://s3.amazonaws.com/sentieon-release/documentation/app_notes/App+note+-+Distributed+mode.pdf) for more details of the `fqidx`.
 
 Then query for the number of chunks in the index file by running the following command:
 
