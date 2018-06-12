@@ -27,7 +27,7 @@ To run the CWL pipelines provided by Sentieon, the following software is require
 To install cwltoil, first, clone the Sentieon's cwltoil repository from
 github, and install the python library source:
 
-    git clone https://github.com/liuxf09/toil.git
+    git clone https://github.com/Sentieon/toil.git
     git checkout tags/sentieon-toil-20180522
     cd toil
     pip install .
