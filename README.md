@@ -28,18 +28,15 @@ To install cwltoil, first, clone the Sentieon's cwltoil repository from
 github, and install the python library source:
 
     git clone https://github.com/Sentieon/toil.git
-    git checkout tags/sentieon-toil-20180522
     cd toil
-    pip install .
-
-Then install cwltool python library:
-
-    pip install cwltool
+    git checkout tags/sentieon-toil-20180522
+    pip install .[all]
 
 You should get cwltoil version as shown below:
 
     cwltoil --version
     DEBUG:rdflib:RDFLib Version: 4.2.2
+    3.16.0a1
 
 You will also need the CWL template package provided by Sentieon. The package contains templates that define Sentieon algorithm modules and typical pipelines with commonly used settings.
 
@@ -164,61 +161,9 @@ In the YAML file, the shard option defines an array of shards, below is an examp
     ...
     ]
 
-Below is a shell script to divide the whole genome into uniform shards. The  "NO_COOR" shard processes unmapped reads.
+You can use the shell script `script/determine_shards.sh` to divide the whole genome into uniform shards. The  "NO_COOR" shard processes unmapped reads.
 
-    PARTS=5 # shard size in base pair
-    BAM=input.bam
-    determine_shards_from_bam()
-    {
-        local bam parts step tag chr len pos end
-        bam="$1"
-        parts="$2"
-        pos=$parts
-        total=$($samtools view -H $bam |
-            (while read tag chr len
-            do
-                [ $tag == '@SQ' ] || continue
-                chr=$(expr "$chr" : 'SN:(.*)')
-                len=$(expr "$len" : 'LN:(.*)')
-                pos=$(($pos + $len))
-            done; 
-            echo $pos))
-        step=$(( $total/$parts ))
-
-        pos=1
-        echo -n '["'
-        $samtools view -H $bam |
-            while read tag chr len
-            do
-                [ $tag == '@SQ' ] || continue
-                chr=$(expr "$chr" : 'SN:(.*)')
-                len=$(expr "$len" : 'LN:(.*)')
-                while [ $pos -le $len ]; do
-                    end=$(($pos + $step - 1))
-                    if [ $pos -lt 0 ]; then
-                        start=1
-                    else
-                        start=$pos
-                    fi
-
-                    if [ $end -gt $len ]; then
-                        if [ $start -eq 1 ]; then
-                            echo -n "$chr,"
-                            else
-                            echo -n "$chr:$start-$len,"
-                        fi
-                        pos=$(($pos-$len))
-                        break
-                    else
-                        echo -n "$chr:$start-$end",""
-                        pos=$(($end + 1))
-                    fi
-                done
-            done
-        echo "NO_COOR"]"
-    }
-
-    determine_shards_from_bam $BAM $PARTS > shards.txt
+    determine_shards.sh $BAM $NUM_PARTS
 
 The user can use the above shell script to generate the set of shards for distributed jobs, completing the yaml file. With the yaml file updated, you can run the pipeline as in the above simple example.
 
@@ -319,74 +264,17 @@ Below is an example of the `pipeline-fastq2vcf-distr.yaml` file.
     mark_secondary: true
     threads: 8
 
-`extract_chunk` field defines how bwa stage is distributed. Using the following script to find out the exact range for distribution:
+`extract_chunk` field defines how bwa stage is distributed. Using the script `script/determine_chunks.sh` to find out the exact range for distribution:
 
-    chunks=1119 # the first number from fqidx query command
-    parts=3 # number of distribution nodes
-    chunk_per_job=`expr $((chunks-1)) / $parts + 1`
-    for i in $(seq 0 $((parts-1))); do
-        k_start=$(($i*$chunk_per_job))
-        k_end=$(($k_start+$chunk_per_job))
-        echo "$k_start-$k_end"
-    done
+    ./determine_chunks.sh $INPUT_FASTQ.IDX $NUM_PARTS
 
-In this case, with 1119 chunks distributed into 3 parts, the above script will give the following output. Enter these chunk ranges into the extract_chunk field of the yaml file.
+The shell script will call `sentieon fqidx query` as shown above to get the total number chunks from the fastq index file, and then divide it into equal-size chunks. In this case, with 1119 chunks distributed into 3 parts, the above script will give the following output. Enter these chunk ranges into the extract_chunk field of the yaml file.
 
-    0-373
-    373-746
-    746-1119
+    ["0-373","373-746","746-1119]
 
-Enter the shards generated from the fai file into shard field, using the following script:
+Enter the shards generated from the fai file into shard field, using the script `script/determine_shards.sh`:
 
-    determine_shards_from_fai()
-    {
-        local bam step tag chr len pos end
-        fai="$1"
-        parts="$2"
-        boundary_unit=10000
-        pos=$parts
-        total=$(cat $fai |
-        (while read chr len UR
-        do
-            pos=$(($pos + $len))
-        done; echo $pos))
-        step=$((($total-1)/$parts+1 ))
-        
-        pos=1
-        echo -n '["'
-        cat $fai |
-        while read chr len other
-        do
-            #[ $tag == '@SQ' ] || continue
-            #chr=$(expr "$chr" : 'SN:(.*)')
-            #len=$(expr "$len" : 'LN:(.*)')
-            while [ $pos -le $len ]; do
-                end=$(($pos + $step - 1))
-                if [ $pos -lt 0 ]; then
-                    start=1
-                else
-                    start=$pos
-                fi
-                if [ $end -le $len ]; then
-                    n=$(($((($end-1) / $boundary_unit))+1))
-                    end=$(($n * $boundary_unit))
-                fi
-                if [ $end -gt $len ]; then
-                    if [ $start -eq 1 ]; then
-                        echo -n "$chr,"
-                    else
-                        echo -n "$chr:$start-$len,"
-                    fi
-                    pos=$(($pos-$len))
-                    break
-                else
-                    echo -n "$chr:$start-$end", ""
-                    pos=$(($end + 1))
-                fi
-            done
-        done
-        echo 'NO_COOR"]'
-    }
+    determine_shards.sh hg19.fasta.fai $NUM_PARTS
 
 With these preparation, user can run the cwltoil pipeline with the yaml input file and get the same result as in the single server.
 
