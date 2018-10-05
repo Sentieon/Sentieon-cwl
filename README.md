@@ -203,26 +203,11 @@ Run the following command to create fastq file index:
 
 where:
 
--   `-K chunk_size`: Defines the chunk size in bases. Same meaning as chunk size in bwa-mem. Using fixed chunk size makes sure consistent result. Example: -K 10000000.
+-   `-K chunk_size`: Defines the chunk size in bases. Same meaning as chunk size in bwa-mem. Using fixed chunk size makes sure consistent result. Example: -K 10000000. Please use the same chunk size here as `chunk_size` defined in the YAML file shown below.  
 -   `-o fastq_index`: Defines the output index file name.
 -   `sample1_1.fq.gz` and `sample1_2.fq.gz`: input pair-ended fastq files.
 
-Please refer to Sentieon's [App note - Distributed mode](https://s3.amazonaws.com/sentieon-release/documentation/app_notes/App+note+-+Distributed+mode.pdf) for more details of the `fqidx`.
-
-Then query for the number of chunks in the index file by running the following command:
-
-    sentieon fqidx query -i fastq_index
-
-For example, you get the following output:
-
-    1119 10000000 2 0
-
-The four numbers refer to the following, respectively:
-
--   Total number of chunks
--   Chunk size
--   Number of input fastq files
--   Whether an interleaved fastq file is used
+Please refer to Sentieon's [App note - Distributed mode](https://support.sentieon.com/appnotes/distributed_mode/#distributing-bwa) for more details of the `fqidx`.
 
 ### Prepare YAML file
 
@@ -264,22 +249,25 @@ Below is an example of the `pipeline-fastq2vcf-distr.yaml` file.
     mark_secondary: true
     threads: 8
 
-`extract_chunk` field defines how bwa stage is distributed. Using the script `script/determine_chunks.sh` to find out the exact range for distribution:
+In the above YAML file, `extract_chunk` field defines how bwa stage is distributed. Use the script `script/determine_chunks.sh` to find out the exact range for distribution:
 
     ./determine_chunks.sh $INPUT_FASTQ.IDX $NUM_PARTS
 
-The shell script will call `sentieon fqidx query` as shown above to get the total number chunks from the fastq index file, and then divide it into equal-size chunks. In this case, with 1119 chunks distributed into 3 parts, the above script will give the following output. Enter these chunk ranges into the extract_chunk field of the yaml file.
+where INPUT_FASTQ.IDX is the index file generated above with fqidx command, and NUM_PARTS is the number of parts the fastq file will be sliced into. Please note NUM_PARTS defines the number of subjobs the bwa distribution will generate. 
+
+The shell script `determine_chunks.sh` will call `sentieon fqidx query` as shown above to get the total number chunks from the fastq index file, and then divide it into equal-size chunks. In this case, with 1119 chunks distributed into 3 parts, the above script will give the following output. Enter these chunk ranges into the extract_chunk field of the yaml file.
 
     ["0-373","373-746","746-1119]
 
-Enter the shards generated from the fai file into shard field, using the script `script/determine_shards.sh`:
+Then use the script `script/determine_shards.sh` to calculate the shards from the fai file for `shard` field in the YAML file. Run the script as shown below:
 
     determine_shards.sh hg19.fasta.fai $NUM_PARTS
+
+where you should use the same reference here as defined in the YAML file, and NUM_PARTS defines the number of subjobs the CWL distribution will generate. 
 
 With these preparation, user can run the cwltoil pipeline with the yaml input file and get the same result as in the single server.
 
 # Specifying the path of input/output data files in YAML for Sentieon pipelines
-
 
 Sentieon CWL pipelines support specifying the path of input data files either as a string or file. Below is an example:
 
