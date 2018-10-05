@@ -251,7 +251,7 @@ Below is an example of the `pipeline-fastq2vcf-distr.yaml` file.
 
 In the above YAML file, `extract_chunk` field defines how bwa stage is distributed. Use the script `script/determine_chunks.sh` to find out the exact range for distribution:
 
-    ./determine_chunks.sh $INPUT_FASTQ.IDX $NUM_PARTS
+    script/determine_chunks.sh $INPUT_FASTQ.IDX $NUM_PARTS
 
 where INPUT_FASTQ.IDX is the index file generated above with fqidx command, and NUM_PARTS is the number of parts the fastq file will be sliced into. Please note NUM_PARTS defines the number of subjobs the bwa distribution will generate. 
 
@@ -261,7 +261,7 @@ The shell script `determine_chunks.sh` will call `sentieon fqidx query` as shown
 
 Then use the script `script/determine_shards.sh` to calculate the shards from the fai file for `shard` field in the YAML file. Run the script as shown below:
 
-    determine_shards.sh hg19.fasta.fai $NUM_PARTS
+    script/determine_shards.sh hg19.fasta.fai $NUM_PARTS
 
 where you should use the same reference here as defined in the YAML file, and NUM_PARTS defines the number of subjobs the CWL distribution will generate. 
 
