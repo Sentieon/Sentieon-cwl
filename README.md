@@ -263,7 +263,7 @@ Then use the script `script/determine_shards.sh` to calculate the shards from th
 
     script/determine_shards.sh hg19.fasta.fai $NUM_PARTS
 
-where you should use the same reference here as defined in the YAML file, and NUM_PARTS defines the number of subjobs the CWL distribution will generate. 
+where you should use the FAI index file for same reference as defined in the YAML file, and NUM_PARTS defines the number of subjobs the CWL distribution will generate. 
 
 With these preparation, user can run the cwltoil pipeline with the yaml input file and get the same result as in the single server.
 
