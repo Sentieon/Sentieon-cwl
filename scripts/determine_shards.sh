@@ -41,7 +41,7 @@ determine_shards_from_bam()
                     pos=$(($pos-$len))
                     break
                 else
-                    echo -n "$chr:$start-$end",""
+                    echo -n "$chr:$start-$end\",\""
                     pos=$(($end + 1))
                 fi
             done
@@ -89,7 +89,7 @@ determine_shards_from_fai()
                 pos=$(($pos-$len))
                 break
             else
-                echo -n "$chr:$start-$end", ""
+                echo -n "$chr:$start-$end\", \""
                 pos=$(($end + 1))
             fi
         done
