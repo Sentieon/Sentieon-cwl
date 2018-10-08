@@ -1,4 +1,7 @@
 #!/bin/sh
+
+no_coor=no
+alias samtools=/home/release/sentieon-DNA-201511.01-pro/bin/samtools
 determine_shards_from_bam()
 {
     local bam parts step tag chr len pos end
@@ -18,8 +21,8 @@ determine_shards_from_bam()
 
     pos=1
     echo -n '["'
-    samtools view -H $bam |
-        while read tag chr len
+    echo -n $(samtools view -H $bam |
+        (while read tag chr len
         do
             [ $tag == '@SQ' ] || continue
             chr=$(expr "$chr" : 'SN:\(.*\)')
@@ -34,19 +37,23 @@ determine_shards_from_bam()
 
                 if [ $end -gt $len ]; then
                     if [ $start -eq 1 ]; then
-                        echo -n "$chr,"
+                        out="$out$chr,"
                         else
-                        echo -n "$chr:$start-$len,"
+                        out="$out$chr:$start-$len,"
                     fi
                     pos=$(($pos-$len))
                     break
                 else
-                    echo -n "$chr:$start-$end\",\""
+                    out="$out$chr:$start-$end\",\""
                     pos=$(($end + 1))
                 fi
             done
-        done
-    echo 'NO_COOR"]'
+        done; echo $out) | sed "s/.$//")
+    if [ $no_coor == "yes" ]; then
+        echo ',NO_COOR"]'
+    else
+        echo '"]'
+    fi
 }
 
 
@@ -66,7 +73,7 @@ determine_shards_from_fai()
     
     pos=1
     echo -n '["'
-    cat $fai |
+    echo -n $(cat $fai | (
     while read chr len other
     do
         while [ $pos -le $len ]; do
@@ -82,26 +89,30 @@ determine_shards_from_fai()
             fi
             if [ $end -gt $len ]; then
                 if [ $start -eq 1 ]; then
-                    echo -n "$chr,"
+                    out="$out$chr,"
                 else
-                    echo -n "$chr:$start-$len,"
+                    out="$out$chr:$start-$len,"
                 fi
                 pos=$(($pos-$len))
                 break
             else
-                echo -n "$chr:$start-$end\", \""
+                out="$out$chr:$start-$end\", \""
                 pos=$(($end + 1))
             fi
         done
-    done
-    echo 'NO_COOR"]'
+    done; echo $out) | sed "s/.$//")
+    if [ $no_coor == "yes" ]; then
+        echo ',NO_COOR"]'
+    else
+        echo '"]'
+    fi
 }
 
 if [ $# -eq 2 ]; then
     filename=$(basename "$1")
     extension="${filename##*.}"
     if [ "$extension" = "fai" ]; then
-        determine_shards_from_fai $1 $2
+        determine_shards_from_fai $1 $2 
     elif [ "$extension" = "bam" ]; then
         determine_shards_from_bam $1 $2
     fi
