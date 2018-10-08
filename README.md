@@ -14,7 +14,7 @@ Both CWL and Toil are under rapid development, and Sentieon is an active contrib
 
 # System requirements
 
-To run the CWL pipelines provided by Sentieon, the following software is required:
+To run the CWL pipelines provided by Sentieon, the following software is required on all work nodes:
 
 1.  Python 2.7 or above
 
