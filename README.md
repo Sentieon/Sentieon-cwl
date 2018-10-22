@@ -1,6 +1,6 @@
 # Introduction
 
-This document describes the integration of Sentieon software with CWL and Toil. This integration enables to easily run CWL-defined Sentieon pipelines on a variety of HPC and cloud environments, either on a single node or distributed onto multiple nodes for rapid turnaround processing. Please see Sentieon [Distribution Application Note](https://s3.amazonaws.com/sentieon-release/documentation/app_notes/App+note+-+Distributed+mode.pdf) on distribution mode for more information on that topic.
+This document describes the integration of Sentieon software with CWL and Toil. This integration enables to easily run CWL-defined Sentieon pipelines on a variety of HPC and cloud environments, either on a single node or distributed onto multiple nodes for rapid turnaround processing. Please see Sentieon [Distribution Application Note](https://support.sentieon.com/appnotes/distributed_mode/) on distribution mode for more information on that topic.
 
 # Introduction to CWL and Toil
 
